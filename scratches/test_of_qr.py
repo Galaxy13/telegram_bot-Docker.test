@@ -1,5 +1,6 @@
 import telebot  # importing Telegram API classes and functions
 import libraries.qr_make as qr  # import qr_make lib with qr functions
+from telebot import types
 import os
 
 # defining global vars
@@ -16,10 +17,14 @@ bot = telebot.TeleBot(TOKEN)
 # dict of bot commands
 commands = {
     'start': 'Get used to bot',
-    'help': 'Gives you infromation about availible commands',
+    'help': 'Gives you information about available commands',
     'qr': 'Creates QR-image from web link'
 }
 
+commandSelect = types.ReplyKeyboardMarkup(one_time_keyboard=True)
+commandSelect.add('/help', '/qr')
+
+hideBoard = types.ReplyKeyboardRemove()
 
 # function checks, if user is known and returns value out of user_step{}, if /qr was executed
 def get_user_step(CHAT_ID):
@@ -32,7 +37,6 @@ def get_user_step(CHAT_ID):
         return 0
 
 
-#
 # debug function, prints message to console, if /qr command hasn't been executed
 def listener(messages):
     for mes in messages:
@@ -50,11 +54,12 @@ def command_start(m):
     CHAT_ID = m.chat.id
     if CHAT_ID not in known_users:
         known_users.append(CHAT_ID)
-        user_step[CHAT_ID] = 0
         bot.send_message(CHAT_ID, 'Hello, stranger, let me scan you...')
         bot.send_message(CHAT_ID, 'Scanning complete, I know you now')
+        user_step[CHAT_ID] = 1
     else:
         bot.send_message(CHAT_ID, 'I already know you, f**k off')
+    bot.send_message(CHAT_ID, 'Please, make a choice:', reply_markup=commandSelect)
 
 
 # register and define command /help
@@ -71,18 +76,36 @@ def command_help(m):
 # register and define command /qr
 @bot.message_handler(commands=['qr'])
 def command_qr(m):
+    global user_step
     CHAT_ID = m.chat.id
+    user_step[CHAT_ID] = 2
     bot.send_message(CHAT_ID, 'Please upload your link:')
-    # set value 1 in dict with key CHAT_ID, so the link_to_qr would be executed
-    user_step[CHAT_ID] = 1
+    # set value 2 in dict with key CHAT_ID, so the link_to_qr would be executed
+
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 1)
+def com_select(m):
+    CHAT_ID = m.chat.id
+    text = m.text
+    types.ReplyKeyboardRemove()
+
+    bot.send_chat_action(CHAT_ID, 'typing')
+
+    if text == '/help':
+        bot.send_message(CHAT_ID, '/help', reply_markup=hideBoard)
+        command_help(m)
+    elif text == '/qr':
+        bot.send_message(CHAT_ID, '/qr', reply_markup=hideBoard)
+        command_qr(m)
+    else:
+        bot.send_message(CHAT_ID, 'Please use keyboard!')
 
 
 # register and define link_to_qr func, with check, if user is execute /qr
-@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 1)
+@bot.message_handler(func=lambda message: get_user_step(message.chat.id) == 2)
 def link_to_qr(m):
     CHAT_ID = m.chat.id
     CHAT_ID_STR = str(CHAT_ID)
-    qr.qr_make(m.text, CHAT_ID_STR)    # launching func from qr lib
+    qr.image_make(m.text, CHAT_ID_STR)    # launching func from qr lib
     bot.send_message(CHAT_ID, 'Here is your QR')
     bot.send_photo(CHAT_ID, open('test_' + CHAT_ID_STR + '.png', 'rb'))     # sending user[CHAT_ID] message with photo
     os.remove('test_' + CHAT_ID_STR + '.png')                               # removing photo from local space
