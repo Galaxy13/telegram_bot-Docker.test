@@ -49,6 +49,6 @@ But, it can be used manually with three options:
 
 QR request returns to user a photo of QR-code in .png format with size 490x490![](images/bot_2.jpg)
 
-##Main contributors:##
+# Main contributors:
 - **Overflow922**
 - **Galaxy13**
