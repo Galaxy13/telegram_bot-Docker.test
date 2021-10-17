@@ -126,3 +126,4 @@ dmypy.json
 
 # token of bot
 scratches/token.txt
+.images/
