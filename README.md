@@ -35,7 +35,9 @@ python3 main.py
 ```
 After that, your Bot is started, and Bot in-chat interaction too.
 
-For using bot, user has a _**keyboard menu**_:![](images/bot.jpg)
+For using bot, user has a _**keyboard menu**_:
+
+![](images/bot.jpg)
 
 But, it can be used manually with three options:
 
