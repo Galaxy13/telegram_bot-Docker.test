@@ -3,7 +3,11 @@ import libraries.qr_make as qr  # import qr_make lib with qr functions
 import os
 
 # defining global vars
-TOKEN = '2055598237:AAHNAv9osQkVCNqDzbgwclOHMAHY-F01Cb8'
+TOKEN = None
+
+with open('token.txt') as f:
+    TOKEN = f.read().strip()
+
 # list with ids of users, who pressed start button
 known_users = []
 # dict with users ids, used for determination, who used /qr command
