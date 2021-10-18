@@ -2,6 +2,7 @@ import telebot  # importing Telegram API classes and functions
 import libraries.qr_make as qr  # import qr_make lib with qr functions
 from telebot import types
 import os
+import libraries.url as val
 
 # defining global vars
 TOKEN = None
@@ -110,12 +111,16 @@ def com_select(m):
 def link_to_qr(m):
     CHAT_ID = m.chat.id
     CHAT_ID_STR = str(CHAT_ID)
-    qr.image_make(m.text, CHAT_ID_STR)    # launching func from qr lib
-    bot.send_message(CHAT_ID, 'Here is your QR')
-    bot.send_photo(CHAT_ID, open('test_' + CHAT_ID_STR + '.png', 'rb'))     # sending user[CHAT_ID] message with photo
-    os.remove('test_' + CHAT_ID_STR + '.png')                               # removing photo from local space
-    user_step[CHAT_ID] = 0
-
+    if val.url_validate(m.text) != False:
+        qr.image_make(m.text, CHAT_ID_STR)    # launching func from qr lib
+        bot.send_message(CHAT_ID, 'Here is your QR')
+        bot.send_photo(CHAT_ID, open('test_' + CHAT_ID_STR + '.png', 'rb'))     # sending user[CHAT_ID] message with photo
+        os.remove('test_' + CHAT_ID_STR + '.png')                               # removing photo from local space
+        user_step[CHAT_ID] = 0
+    else:
+        bot.send_message(CHAT_ID, 'Your link is not valid!')
+        bot.send_message(CHAT_ID, 'Please try again!')
+        command_qr(m)
 
 # register and define message handler, which executes, if /qr has not executed
 @bot.message_handler(func=lambda message: True, content_types=['text'])
