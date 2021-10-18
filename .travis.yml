@@ -1,6 +1,10 @@
 language: python
 
-services: docker
+script:
+  tests/url_validation.py
+
+services:
+  docker
 
 branches:
   only:
