@@ -13,7 +13,7 @@ This bot requires  [Python 3](https://www.python.org/downloads/) installation on
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install packages:
 ```bash
 pip install qrcode
-pip install pip install pyTelegramBotAPI
+pip install pyTelegramBotAPI
 ```
 After that just clone the repository:
 ```bash
