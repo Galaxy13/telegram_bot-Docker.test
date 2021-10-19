@@ -16,6 +16,5 @@ def qr_make(web_link):
 
 def image_make(web_link, CHAT_ID):
     qr = qr_make(web_link)
-    img = qr.make_image(fill_color="black",
-                        back_color='white').convert('RGB')
-    img.save('test_' + CHAT_ID + '.png')
+    img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
+    img.save("test_" + CHAT_ID + ".png")
