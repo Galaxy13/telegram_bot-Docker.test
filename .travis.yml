@@ -6,7 +6,6 @@ python:
 
 before_script:
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
-  - black --check
 
 before_install:
   - python --version
@@ -15,6 +14,7 @@ before_install:
   - pip install qrcode
   - pip install pyTelegramBotAPI
   - pip install black
+  - black --check *.py
 
 script:
   pytest
