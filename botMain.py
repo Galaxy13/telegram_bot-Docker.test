@@ -19,7 +19,7 @@ class Token(object):
 known_users = []
 # dict with users ids, used for determination, who used /qr command
 user_step = {}
-token = Token("scratches/token.txt")
+token = Token("token.txt")
 # calling .token() method to assign Bot token from token.txt
 bot = telebot.TeleBot(token.token())
 # dict of bot commands

@@ -126,4 +126,5 @@ dmypy.json
 
 # token of bot
 token.txt
-images/
+/images/
+/scratches/
