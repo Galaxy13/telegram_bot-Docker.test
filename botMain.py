@@ -4,17 +4,25 @@ from telebot import types
 import os
 import libraries.url as val
 
-# defining global vars
-TOKEN = None
 
-with open('token.txt') as f:
-    TOKEN = f.read().strip()
+# update: changing global var TOKEN to class with method token.token()
+class Token(object):
+
+    def __init__(self, filename):
+        self.filename = filename
+
+    def token(self):
+        with open(self.filename) as f:
+            return f.read().strip()
+
 
 # list with ids of users, who pressed start button
 known_users = []
 # dict with users ids, used for determination, who used /qr command
 user_step = {}
-bot = telebot.TeleBot(TOKEN)
+token = Token('scratches/token.txt')
+# calling .token() method to assign Bot token from token.txt
+bot = telebot.TeleBot(token.token())
 # dict of bot commands
 commands = {
     'start': 'Get used to bot',
@@ -111,16 +119,17 @@ def com_select(m):
 def link_to_qr(m):
     CHAT_ID = m.chat.id
     CHAT_ID_STR = str(CHAT_ID)
-    if val.url_validate(m.text) != False:
-        qr.image_make(m.text, CHAT_ID_STR)    # launching func from qr lib
+    if val.url_validate(m.text):
+        qr.image_make(m.text, CHAT_ID_STR)  # launching func from qr lib
         bot.send_message(CHAT_ID, 'Here is your QR')
-        bot.send_photo(CHAT_ID, open('test_' + CHAT_ID_STR + '.png', 'rb'))     # sending user[CHAT_ID] message with photo
-        os.remove('test_' + CHAT_ID_STR + '.png')                               # removing photo from local space
+        bot.send_photo(CHAT_ID, open('test_' + CHAT_ID_STR + '.png', 'rb'))  # sending user[CHAT_ID] message with photo
+        os.remove('test_' + CHAT_ID_STR + '.png')  # removing photo from local space
         user_step[CHAT_ID] = 0
     else:
         bot.send_message(CHAT_ID, 'Your link is not valid!')
         bot.send_message(CHAT_ID, 'Please try again!')
         command_qr(m)
+
 
 # register and define message handler, which executes, if /qr has not executed
 @bot.message_handler(func=lambda message: True, content_types=['text'])
