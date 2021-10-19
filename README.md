@@ -27,11 +27,11 @@ cd ...\telegram_bot-Docker.test\scratches
 vim token.txt
 ```
 You should put token in token.txt, you received, without other symbols. 
-[Example](example_token.txt)
+[Example](examples/example_token.txt)
 
-Launch main.py:
+Launch botMain.py:
 ```bash
-python3 main.py
+python3 botMain.py
 ```
 After that, your Bot is started, and Bot in-chat interaction too.
 
