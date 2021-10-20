@@ -7,7 +7,6 @@ python:
 
 before_script:
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
-  - travis encrypt MY_SECRET_ENV=super_secret -r Galaxy13/telegram_bot-Docker.test --add deploy.api_key
 
 before_install:
   - python --version
@@ -18,16 +17,19 @@ before_install:
   - pip install black
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh #installed heroku CLI
   - docker login --username='gen.hort54@gmail.com' --password='82f37e21-4814-4e99-ad11-367ca38286d5' registry.heroku.com
+  - docker build -t Galaxy13/telegram_bot-Docker.test .
   - black botMain.py --check
   - black libraries/qr_make.py --check
   - black libraries/url.py --check
   - black tests/test_url_validation.py --check
-  - gem install travis
-  - heroku login
-  - travis encrypt $(heroku auth:token) --add deploy.api_key --pro
 
 script:
-  pytest
+  docker run Galaxy13/telegram_bot-Docker.test python pytest
+
+after_script:
+  - bash docker_hub_push
+  - docker tag Galaxy13/telegram_bot-Docker.test registry.heroku.com/telegramqrbot/web
+  - docker push registry.heroku.com/telegramqrbot/web
 
 services:
   docker
@@ -38,6 +40,8 @@ branches:
 
 deploy:
   provider: script
+  api_key:
+    '82f37e21-4814-4e99-ad11-367ca38286d5'
   script:
     heroku container:release web --app telegramqrbot
   on: heroku
