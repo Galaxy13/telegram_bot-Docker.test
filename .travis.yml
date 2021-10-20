@@ -23,7 +23,7 @@ before_install:
   - black libraries/url.py --check
   - black tests/test_url_validation.py --check
   - gem install travis
-  - travis encrypt '82f37e21-4814-4e99-ad11-367ca38286d5' --add deploy.api_key
+  - travis encrypt $(heroku auth:token) --add deploy.api_key
 
 script:
   pytest
@@ -37,8 +37,6 @@ branches:
 
 deploy:
   provider: script
-  api_key:
-    ''
   script:
     heroku container:release web --app telegramqrbot
   on: heroku
