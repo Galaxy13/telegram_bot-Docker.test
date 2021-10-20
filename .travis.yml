@@ -36,6 +36,4 @@ deploy:
   provider: script
   script:
     heroku container:release web --app telegramqrbot
-  on:
-    branches:
-      - heroku
+  on: heroku
