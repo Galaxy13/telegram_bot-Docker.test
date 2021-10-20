@@ -39,4 +39,4 @@ deploy:
     heroku container:release web --app telegramqrbot
   on:
     branch:
-      master
+      telegramqrbot/staging
