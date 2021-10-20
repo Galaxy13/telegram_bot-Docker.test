@@ -16,7 +16,7 @@ before_install:
   - pip install pyTelegramBotAPI
   - pip install black
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh #installed heroku CLI
-  - docker login -u "gen.hort54@gmail.com" --password=$(heroku auth:djigurdgen44A~) registry.heroku.com #logged in
+  - docker login -u "gen.hort54@gmail.com" --password=$(heroku auth:token) registry.heroku.com #logged in
   - black botMain.py --check
   - black libraries/qr_make.py --check
   - black libraries/url.py --check
