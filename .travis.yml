@@ -38,3 +38,6 @@ deploy:
     82f37e21-4814-4e99-ad11-367ca38286d5
   script:
     heroku container:release web --app telegramqrbot
+  on:
+    branches:
+      staging
