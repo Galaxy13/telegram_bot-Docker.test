@@ -7,6 +7,7 @@ python:
 
 before_script:
   - export PYTHONPATH=$PYTHONPATH:$(pwd)
+  - travis encrypt MY_SECRET_ENV=super_secret -r Galaxy13/telegram_bot-Docker.test --add deploy.api_key
 
 before_install:
   - python --version
@@ -21,6 +22,7 @@ before_install:
   - black libraries/qr_make.py --check
   - black libraries/url.py --check
   - black tests/test_url_validation.py --check
+  - gem install --user travis
 
 script:
   pytest
@@ -35,7 +37,7 @@ branches:
 deploy:
   provider: script
   api_key:
-    '82f37e21-4814-4e99-ad11-367ca38286d5'
+    ''
   script:
     heroku container:release web --app telegramqrbot
   on: heroku
