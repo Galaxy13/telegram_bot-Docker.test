@@ -24,11 +24,11 @@ before_install:
   - black tests/test_url_validation.py --check
 
 script:
-  docker run galaxy13/telegram_bot-docker.test python pytest
+  docker run galaxy13/telegramqrbot python pytest
 
 after_script:
   - bash docker_hub_push
-  - docker tag galaxy13/telegram_bot-docker.test registry.heroku.com/telegramqrbot/web
+  - docker tag galaxy13/telegramqrbot registry.heroku.com/telegramqrbot/web
   - docker push registry.heroku.com/telegramqrbot/web
 
 services:
