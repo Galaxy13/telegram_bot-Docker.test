@@ -20,5 +20,5 @@ CMD ["python"]
 
 ENV PYTHONPATH=.
 
-CMD python botMain.py --port=44158  #port receiving
+CMD python botMain.py $PORT
 
