@@ -28,7 +28,7 @@ script:
 
 after_script:
   - bash docker_hub_push
-  - docker tag galaxy13/telegram_bot-Docker.test registry.heroku.com/telegramqrbot/web
+  - docker tag galaxy13/telegram_bot-docker.test registry.heroku.com/telegramqrbot/web
   - docker push registry.heroku.com/telegramqrbot/web
 
 services:
