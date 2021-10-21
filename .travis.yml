@@ -24,7 +24,7 @@ before_install:
   - black tests/test_url_validation.py --check
 
 script:
-  docker run Galaxy13/telegram_bot-Docker.test python pytest
+  docker run galaxy13/telegram_bot-docker.test python pytest
 
 after_script:
   - bash docker_hub_push
