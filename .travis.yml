@@ -28,8 +28,8 @@ script:
 after_script:
   - bash docker_hub_push
   - docker login --username='gen.hort54@gmail.com' --password='82f37e21-4814-4e99-ad11-367ca38286d5' registry.heroku.com
-  - docker tag galaxy13/telegramqrbot registry.heroku.com/telegramqrbot/web
-  - docker push registry.heroku.com/telegramqrbot/web
+  - docker tag galaxy13/telegramqrbot registry.heroku.com/telegramqrbot/staging
+  - docker push registry.heroku.com/telegramqrbot/staging
 
 services:
   docker
