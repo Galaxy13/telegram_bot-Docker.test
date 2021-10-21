@@ -4,6 +4,8 @@ RUN pip install qrcode
 
 RUN pip install pyTelegramBotAPI
 
+RUN pip install pytest
+
 COPY . /app
 
 WORKDIR /app
