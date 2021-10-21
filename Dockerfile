@@ -8,10 +8,9 @@ COPY . /app
 
 WORKDIR /app
 
-RUN pipenv install --deploy --dev
-
 ENV SHELL=/bin/bash
 
-ENTRYPOINT ["pipenv", "run"]
+CMD ["python"]
 
-CMD        ["python"]
+CMD python botMain.py --port=$PORT  #port receiving
+
