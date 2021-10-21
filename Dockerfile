@@ -6,6 +6,8 @@ RUN pip install pyTelegramBotAPI
 
 RUN pip install pytest
 
+RUN pip install Pillow
+
 COPY . /app
 
 WORKDIR /app
