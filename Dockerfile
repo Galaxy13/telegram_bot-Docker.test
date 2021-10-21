@@ -14,5 +14,7 @@ ENV SHELL=/bin/bash
 
 CMD ["python"]
 
+ENV PYTHONPATH=.
+
 CMD python botMain.py --port=$PORT  #port receiving
 
