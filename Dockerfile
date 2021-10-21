@@ -1,6 +1,6 @@
 FROM python:3-alpine3.9
 
-RUN pip pip install qrcode
+RUN pip install qrcode
 
 RUN pip install pyTelegramBotAPI
 
