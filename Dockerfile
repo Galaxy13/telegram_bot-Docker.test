@@ -4,8 +4,6 @@ RUN pip install qrcode
 
 RUN pip install pyTelegramBotAPI
 
-RUN pip install black
-
 COPY . /app
 
 WORKDIR /app
